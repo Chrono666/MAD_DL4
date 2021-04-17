@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     override fun onSupportNavigateUp(): Boolean {
+        navController = this.findNavController(R.id.navhostFragment)
         return NavigationUI.navigateUp(navController, drawerLayout)
     }
     // onCreate, onStart, onPause, onResume, onDestroy, onRestart, onStop
