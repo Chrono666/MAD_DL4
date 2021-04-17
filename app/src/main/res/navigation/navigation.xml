@@ -35,7 +35,7 @@
         tools:layout="@layout/fragment_watchlist" />
     <fragment
         android:id="@+id/quizFragment"
-        android:name="com.example.mad03_fragments_and_navigation.QuizFragment"
+        android:name="com.example.mad03_fragments_and_navigation.quizFragment.QuizFragment"
         tools:layout="@layout/fragment_quiz"
         android:label="QuizFragment" >
         <action
@@ -46,7 +46,7 @@
     </fragment>
     <fragment
         android:id="@+id/quizEndFragment"
-        android:name="com.example.mad03_fragments_and_navigation.QuizEndFragment"
+        android:name="com.example.mad03_fragments_and_navigation.quizEndFragment.QuizEndFragment"
         tools:layout="@layout/fragment_quiz_end"
         android:label="QuizEndFragment" >
         <action
@@ -55,6 +55,7 @@
             app:popUpTo="@id/homeFragment"
             app:popUpToInclusive="true" />
         <argument android:name="score"
-            app:argType="integer" />
+            app:argType="integer"
+            android:defaultValue="0" />
     </fragment>
 </navigation>
