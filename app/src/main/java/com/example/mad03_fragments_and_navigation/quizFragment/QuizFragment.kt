@@ -1,6 +1,7 @@
 package com.example.mad03_fragments_and_navigation.quizFragment
 
 import android.os.Bundle
+import android.text.format.DateUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -43,6 +44,10 @@ class QuizFragment : Fragment() {
 
         viewModel.eventGameFinish.observe(viewLifecycleOwner, Observer<Boolean> { hasFinished ->
             if (hasFinished) gameFinished()
+        })
+
+        viewModel.currentTime.observe(viewLifecycleOwner, { currentTime ->
+            binding.textCounter.text = DateUtils.formatElapsedTime(currentTime)
         })
 
         binding.btnNext.setOnClickListener {

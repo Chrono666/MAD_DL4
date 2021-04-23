@@ -1,9 +1,11 @@
 package com.example.mad03_fragments_and_navigation.quizFragment
 
+import android.os.CountDownTimer
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.navigation.fragment.NavHostFragment
 import com.example.mad03_fragments_and_navigation.models.Question
 import com.example.mad03_fragments_and_navigation.models.QuestionCatalogue
 
@@ -33,6 +35,13 @@ class QuizViewModel : ViewModel() {
     val index: LiveData<Int>
         get() = _index
 
+    private val countdownTimer = 30000L
+    private val sec = 1000L
+    private val countFinished = 0L
+    private lateinit var timer: CountDownTimer
+
+    val currentTime =  MutableLiveData<Long>()
+
 
     init {
         _score.value = 0
@@ -41,6 +50,18 @@ class QuizViewModel : ViewModel() {
         resetQuestions()
         _questionsCount.value = _questions.value?.size
         nextQuestion()
+
+        timer = object : CountDownTimer(countdownTimer,sec) {
+            override fun onTick(millisUntilFinished: Long) {
+                currentTime.value = millisUntilFinished/sec
+            }
+
+            override fun onFinish() {
+                onGameFinish()
+                currentTime.value = countFinished
+            }
+        }
+        timer.start()
         Log.i("QuizViewModel", "QuizViewModel created!")
     }
 
@@ -48,8 +69,10 @@ class QuizViewModel : ViewModel() {
         _questions.value = QuestionCatalogue().defaultQuestions.toMutableList()
     }
 
+
     override fun onCleared() {
         super.onCleared()
+        timer.cancel()
         Log.i("QuizViewModel", "QuizViewModel destroyed!")
     }
 
